@@ -11920,5 +11920,25 @@ window.clearPosCart = clearCart;
       posSelectedCustomerId = 1;
     }
     void closeModal('customer-modal');
-  };
+  };// --- إصلاحات سريعة (Master Fixes) ---
+// 1. إصلاح الباركود
+const originalSetTimeout = window.setTimeout;
+window.setTimeout = function(cb, ms, ...args) {
+    if (ms === 50) ms = 150;
+    return originalSetTimeout(cb, ms, ...args);
+};
+
+// 2. تفعيل الصوت
+document.addEventListener('click', function unlockAudio() {
+    const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+    audio.play().catch(()=>{});
+    document.removeEventListener('click', unlockAudio);
+}, { once: true });
+
+// 3. إصلاح Ctrl+R للوحة المفاتيح العربية
+window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'r' || e.key === 'ر')) {
+        e.preventDefault(); location.reload();
+    }
+});
 })();
