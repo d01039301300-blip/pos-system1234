@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+<title id="title">SYSTEM لإدارة حسابات بضاعتك</title><desc id="desc">شعار أبيض حديث على خلفية سوداء</desc>
+<rect width="1200" height="320" rx="24" fill="#050b12"/>
+<g transform="translate(42 28)">
+ <circle cx="132" cy="132" r="119" fill="none" stroke="#f7fbff" stroke-width="10" opacity=".96"/>
+ <path d="M51 165 93 123l30 24 76-84" fill="none" stroke="#18c7b5" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+ <path d="m184 62 23-7-2 24" fill="none" stroke="#18c7b5" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+ <circle cx="51" cy="165" r="8" fill="#fff"/><circle cx="93" cy="123" r="8" fill="#fff"/><circle cx="123" cy="147" r="8" fill="#fff"/><circle cx="199" cy="63" r="8" fill="#fff"/>
+ <path d="M79 192h104v67H79z M79 192l52 28 52-28 M131 220v39" fill="none" stroke="#f7fbff" stroke-width="8" stroke-linejoin="round"/>
+</g>
+<text x="1160" y="136" text-anchor="end" direction="ltr" unicode-bidi="bidi-override" font-family="Segoe UI,Arial,sans-serif" font-size="106" font-weight="900" letter-spacing="2" fill="#ffffff">SYSTEM</text>
+<text x="1160" y="211" text-anchor="end" direction="rtl" font-family="Segoe UI,Tahoma,Arial,sans-serif" font-size="46" font-weight="800" fill="#18c7b5">لإدارة حسابات بضاعتك</text>
+<path d="M405 250H1158" stroke="#fff" stroke-opacity=".34" stroke-width="2"/>
+<text x="1160" y="287" text-anchor="end" direction="ltr" unicode-bidi="bidi-override" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="700" letter-spacing="3" fill="#eef4f8">INVENTORY &amp; ACCOUNTING SOLUTIONS</text>
+</svg>

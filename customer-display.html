@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>شاشة العميل</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#172033;font-family:Tahoma,Arial,sans-serif}.wrap{max-width:1500px;margin:auto;padding:3vh 3vw}.brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:3vh}.brand h1{font-size:clamp(22px,3vw,42px);margin:0;color:#173e67}.brand span{color:#667085;font-size:clamp(14px,1.7vw,22px)}.columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,32%);gap:2vw}.card{background:white;border:1px solid #dbe3ec;border-radius:20px;padding:clamp(16px,2vw,30px);box-shadow:0 8px 30px #182a4112}table{width:100%;border-collapse:collapse;font-size:clamp(15px,1.8vw,24px)}th,td{padding:1.4vh .8vw;text-align:right;border-bottom:1px solid #e8edf3}th{background:#eef3f8;color:#40526a}.total{display:flex;justify-content:space-between;align-items:center;margin-top:2vh;font-size:clamp(24px,3vw,44px);font-weight:900;color:#145c3a}.meta{display:flex;justify-content:space-between;gap:12px;margin-top:1.4vh;color:#526176;font-size:clamp(14px,1.6vw,22px)}.empty{min-height:50vh;display:grid;place-items:center;color:#8793a5;font-size:clamp(20px,2.5vw,36px);text-align:center}.pay{text-align:center}.pay h2{font-size:clamp(19px,2.4vw,34px)}.pay img{max-width:min(30vw,300px);max-height:38vh;object-fit:contain}.paytext{overflow-wrap:anywhere;font-size:clamp(15px,1.6vw,20px);color:#34445b}.hint{margin-top:2vh;font-size:clamp(13px,1.4vw,18px);color:#7a8698}@media(max-width:700px){.columns{grid-template-columns:1fr}.empty{min-height:20vh}}
+    :root{--e1-scale:1.3}body{font-family:'Reem Kufi Ink',sans-serif;line-height:1.5}body[data-font-size="normal"]{--e1-scale:1}body[data-font-size="xlarge"]{--e1-scale:1.6}body :where(h1,h2,h3,button,input,select,textarea,table,th,td,p,span,a){font-family:'Reem Kufi Ink',sans-serif;font-size:max(13px,calc(14px * var(--e1-scale)));line-height:1.5}body h1,body h2{font-size:max(13px,calc(16px * var(--e1-scale)))}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="brand"><h1 id="display-business-name">أهلاً وسهلاً</h1><span id="display-customer"></span></header>
+    <div class="columns">
+      <section class="card">
+        <div id="display-empty" class="empty">يسعدنا خدمتكم<br>ابدأوا باختيار المنتجات</div>
+        <table id="display-table" hidden><thead><tr><th>الصنف</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr></thead><tbody id="display-items"></tbody></table>
+        <div id="display-total" class="total" hidden><span>الإجمالي</span><span id="display-total-value">0.00 ج.م</span></div>
+        <div class="meta"><span>طريقة الدفع</span><strong id="display-payment">—</strong></div>
+        <p id="display-updated" class="hint"></p>
+      </section>
+      <aside id="display-payment-card" class="card pay" hidden>
+        <h2>امسح كود الدفع</h2>
+        <img id="display-qr" alt="رمز دفع QR" hidden>
+        <p id="display-payment-text" class="paytext"></p>
+        <p class="hint">تأكد من ظهور إشعار الدفع قبل إتمام الفاتورة.</p>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const money=value=>`${Number(value||0).toFixed(2)} ج.م`;
+    function render(data={}){
+      const empty=document.getElementById('display-empty'),table=document.getElementById('display-table'),total=document.getElementById('display-total'),body=document.getElementById('display-items');
+      const rows=Array.isArray(data.items)?data.items:[];empty.hidden=rows.length>0;table.hidden=!rows.length;total.hidden=!rows.length;body.replaceChildren();
+      for(const row of rows){const tr=document.createElement('tr');for(const value of [row.name||'',row.quantity||0,money(row.unitPrice),money(row.total)]){const td=document.createElement('td');td.textContent=String(value);tr.append(td)}body.append(tr)}
+      document.getElementById('display-total-value').textContent=money(data.total);document.getElementById('display-customer').textContent=data.customer||'';document.getElementById('display-payment').textContent=data.payment||'—';
+      document.getElementById('display-updated').textContent=data.updatedAt?`تحديث ${new Intl.DateTimeFormat('ar-EG',{hour:'2-digit',minute:'2-digit'}).format(new Date(data.updatedAt))}`:'';
+      const settings=(()=>{try{return JSON.parse(localStorage.getItem('rawda_pos_hardware')||'{}')}catch{return {}}})();
+      const card=document.getElementById('display-payment-card'),img=document.getElementById('display-qr'),text=document.getElementById('display-payment-text');
+      const show=Boolean(settings.showPaymentQr);card.hidden=!show;img.hidden=!show||!settings.qrImageData;if(settings.qrImageData)img.src=settings.qrImageData;text.textContent=show?(settings.paymentQrText||'') :'';
+    }
+    try{document.getElementById('display-business-name').textContent=JSON.parse(localStorage.getItem('business_profile')||'{}').business_name||'أهلاً وسهلاً'}catch{}
+    try{render(JSON.parse(localStorage.getItem('rawda_customer_display_payload')||'{}'))}catch{render()}
+    if(typeof BroadcastChannel!=='undefined'){const channel=new BroadcastChannel('rawda-pos-customer-display');channel.onmessage=event=>render(event.data||{})}
+    window.addEventListener('storage',event=>{if(event.key==='rawda_customer_display_payload')try{render(JSON.parse(event.newValue||'{}'))}catch{}});
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ar" dir="rtl" class="theme-neon-night">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الإعدادات - SYSTEM</title>
+  <link rel="stylesheet" href="assets/vendor/fonts.css?v=5.3.0">
+  <link rel="stylesheet" href="assets/vendor/tailwind-3.4.17.min.css?v=20261014">
+  <link rel="stylesheet" href="app.css?v=148">
+  <link rel="stylesheet" href="assets/themes/zz-layout-final.css?v=2">
+  <link rel="stylesheet" href="assets/themes/system-themes.css">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/all.min.css?v=6.4.0">
+  <style>
+    :root { --settings-width: 1180px; }
+    body { min-height:100vh; margin:0; background:var(--ui-page,#080d16); color:var(--ui-ink,#f8fafc); font-family:Cairo, sans-serif; }
+    .settings-standalone { width:min(var(--settings-width),calc(100% - 32px)); margin:0 auto; padding:24px 0 40px; }
+    .settings-standalone__header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border:1px solid var(--ui-line,#1e4560); border-radius:18px; background:var(--ui-header,#101827); }
+    .settings-standalone__header h1 { margin:0; font-size:clamp(1.25rem,2vw,1.8rem); font-weight:900; }
+    .settings-standalone__header p { margin:.35rem 0 0; color:var(--ui-muted,#94a3b8); font-size:.85rem; }
+    .settings-standalone__back { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--ui-line,#1e4560); border-radius:12px; padding:10px 14px; color:var(--ui-ink,#f8fafc); text-decoration:none; font-weight:800; }
+    .settings-standalone__grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:18px; }
+    .settings-card { border:1px solid var(--ui-line,#1e4560); border-radius:16px; background:linear-gradient(145deg,var(--ui-raised,#111a29),var(--ui-surface,#0b1320)); padding:18px; }
+    .settings-card--wide { grid-column:1/-1; }
+    .settings-card h2 { display:flex; align-items:center; gap:10px; margin:0 0 8px; color:var(--ui-ink,#f8fafc); font-size:1.05rem; font-weight:900; }
+    .settings-card h2 i { color:var(--ui-accent,#22d3ee); }
+    .settings-card p { margin:0 0 14px; color:var(--ui-muted,#94a3b8); font-size:.82rem; line-height:1.8; }
+    .settings-card__fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .settings-card label { display:grid; gap:6px; color:var(--ui-ink,#f8fafc); font-size:.8rem; font-weight:800; }
+    .settings-card input,.settings-card select { width:100%; box-sizing:border-box; border:1px solid var(--ui-line,#1e4560); border-radius:10px; background:var(--ui-surface,#0b1320); color:var(--ui-ink,#f8fafc); padding:10px 12px; font:inherit; }
+    .settings-card__actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .settings-card button { border:1px solid var(--ui-line,#1e4560); border-radius:10px; background:var(--ui-accent-strong,#0891b2); color:#fff; padding:9px 14px; cursor:pointer; font:inherit; font-size:.78rem; font-weight:900; }
+    .settings-card button.secondary { background:transparent; color:var(--ui-ink,#f8fafc); }
+    .settings-card__status { margin-top:12px; color:var(--ui-muted,#94a3b8); font-size:.75rem; }
+    @media (max-width:860px) { .settings-standalone__grid { grid-template-columns:1fr 1fr; } .settings-card--wide { grid-column:1/-1; } }
+    @media (max-width:600px) { .settings-standalone { width:min(100% - 20px,var(--settings-width)); padding-top:10px; } .settings-standalone__header { align-items:flex-start; flex-direction:column; } .settings-standalone__grid,.settings-card__fields { grid-template-columns:1fr; } .settings-card--wide { grid-column:auto; } }
+  </style>
+</head>
+<body>
+  <main class="settings-standalone" aria-labelledby="settings-page-title">
+    <header class="settings-standalone__header">
+      <div>
+        <h1 id="settings-page-title"><i class="fa-solid fa-gear" aria-hidden="true"></i> مركز الإعدادات</h1>
+        <p>نسخة مستقلة للمراجعة والتعديل — لا تستبدل شاشة الإعدادات داخل البرنامج.</p>
+      </div>
+      <a class="settings-standalone__back" href="index.html"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> العودة للبرنامج</a>
+    </header>
+
+    <section class="settings-standalone__grid">
+      <article class="settings-card">
+        <h2><i class="fa-solid fa-language" aria-hidden="true"></i> لغة البرنامج</h2>
+        <p>اختيار اللغة التي تُستخدم في جميع الشاشات.</p>
+        <label for="system-language-setting">اللغة
+          <select id="system-language-setting"><option>العربية</option><option>English</option></select>
+        </label>
+      </article>
+      <article class="settings-card">
+        <h2><i class="fa-solid fa-text-height" aria-hidden="true"></i> حجم الخط</h2>
+        <p>تغيير حجم النصوص والأزرار والجداول بما يناسب المستخدم.</p>
+        <label for="font-size-setting">الحجم
+          <select id="font-size-setting"><option>عادي</option><option selected>كبير</option><option>كبير جداً</option></select>
+        </label>
+      </article>
+      <article class="settings-card">
+        <h2><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> تكبير الواجهة</h2>
+        <p>يمكن استخدام Ctrl + وCtrl - وCtrl 0 من داخل البرنامج.</p>
+        <div class="settings-card__actions"><button type="button">تصغير</button><button type="button">100%</button><button type="button">تكبير</button></div>
+      </article>
+
+      <article class="settings-card settings-card--wide">
+        <h2><i class="fa-solid fa-building" aria-hidden="true"></i> بيانات النشاط</h2>
+        <p>بيانات النشاط التي تظهر في الفواتير والواجهات.</p>
+        <div class="settings-card__fields">
+          <label>اسم النشاط<input type="text" placeholder="اكتب اسم نشاطك"></label>
+          <label>اسم صاحب النشاط<input type="text" placeholder="اكتب اسم صاحب النشاط"></label>
+          <label>نوع النشاط<select><option>اختر نوع النشاط</option><option>تجزئة</option><option>مطعم</option><option>خدمات</option><option>جملة</option></select></label>
+          <label>رقم الهاتف<input type="tel" dir="ltr" placeholder="رقم الهاتف"></label>
+          <label>العنوان<input type="text" placeholder="اكتب عنوان النشاط"></label>
+          <label>لوجو النشاط<input type="file" accept="image/png,image/jpeg,image/webp"></label>
+        </div>
+        <div class="settings-card__actions"><button type="button">حفظ بيانات النشاط</button><button type="button" class="secondary">إزالة اللوجو</button></div>
+      </article>
+
+      <article class="settings-card">
+        <h2><i class="fa-solid fa-database" aria-hidden="true"></i> قاعدة البيانات</h2>
+        <p>اختيار مكان حفظ قاعدة البيانات بعيداً عن مجلد التثبيت.</p>
+        <label>المسار الحالي<input type="text" dir="ltr" placeholder="D:\بيانات البرنامج\database.sqlite"></label>
+        <div class="settings-card__actions"><button type="button">اختيار مجلد</button><button type="button" class="secondary">فتح المجلد</button></div>
+      </article>
+      <article class="settings-card">
+        <h2><i class="fa-solid fa-network-wired" aria-hidden="true"></i> الشبكة والـ IP</h2>
+        <p>إعداد الوصول من أجهزة المحل المتصلة بنفس الشبكة.</p>
+        <div class="settings-card__fields"><label>العنوان<input type="text" dir="ltr" value="0.0.0.0"></label><label>المنفذ<input type="number" value="3000"></label></div>
+        <div class="settings-card__actions"><button type="button">حفظ إعدادات الشبكة</button><button type="button" class="secondary">عرض رابط الشبكة</button></div>
+      </article>
+      <article class="settings-card">
+        <h2><i class="fa-solid fa-cash-register" aria-hidden="true"></i> أجهزة نقطة البيع</h2>
+        <p>الطابعة ودرج النقدية والميزان وشاشة العميل.</p>
+        <label>الطابعة<select><option>Windows</option><option>ESC/POS</option></select></label>
+        <div class="settings-card__actions"><button type="button">اختبار الطباعة</button><button type="button" class="secondary">اختيار منفذ COM</button></div>
+      </article>
+
+      <article class="settings-card settings-card--wide">
+        <h2><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> النسخ الاحتياطي والاستعادة</h2>
+        <p>حفظ نسخة آمنة من البيانات واستعادتها عند الحاجة.</p>
+        <div class="settings-card__actions"><button type="button">تحميل نسخة احتياطية</button><button type="button" class="secondary">اختيار نسخة للاستعادة</button><button type="button" class="secondary">تحديث القائمة</button></div>
+        <div class="settings-card__status">النسخ الاحتياطي متاح من داخل البرنامج بعد تسجيل الدخول.</div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

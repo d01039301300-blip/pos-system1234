@@ -1,0 +1,15 @@
+# License private key — never commit
+keys/
+*.private.pem
+# Generated licenses (never commit — contain customer data)
+license-*.json
+test-license.json
+
+# Delivery artifacts
+ai-export/
+SystemPOS_4.16_Delivery*
+
+# Build assets
+dist/
+build/logo.png
+build/icon.ico

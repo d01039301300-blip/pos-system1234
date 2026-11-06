@@ -1,0 +1,12 @@
+# TASK 8 — نموذج متغيرات بيئة فرع
+# لا تضع كلمة السر في git.
+
+PGHOST=10.147.20.1
+PGPORT=5432
+PGDATABASE=pos_branch_01
+PGUSER=pos_user
+PGPASSWORD=CHANGE_ME
+
+# اختياري:
+# SQLITE_DB_PATH=D:\source\database.sqlite
+# PG_SYNC_ENABLED=0

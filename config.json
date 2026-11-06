@@ -1,0 +1,7 @@
+{
+  "API_KEY": "",
+  "SENDER_ID": "",
+  "SMS_API_URL": "",
+  "MIN_DELAY_SEC": 5,
+  "MAX_DELAY_SEC": 12
+}

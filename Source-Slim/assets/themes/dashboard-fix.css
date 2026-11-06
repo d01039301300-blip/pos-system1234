@@ -1,0 +1,81 @@
+/* ===========================================================================
+   dashboard-fix.css — loaded AFTER dashboard-final.css.
+   Fixes three things (CSS only, no logic changes):
+   1) Shrinking the page (Ctrl + minus / UI zoom) left an empty band under the
+      status bar because the shell height was computed from 100vh while the page
+      is scaled with CSS zoom. The shell is now pinned to the window edges.
+   2) "Collapse sidebar" left a wide, text-less sidebar on screen when an inline
+      `display:block !important` (set while switching screens) beat the stylesheet.
+      The collapsed sidebar on the dashboard now takes no space, whatever inline
+      style is on it. (The header "القائمة" button opens it again.)
+   3) Narrow windows: the sidebar squeezed the content and the header text broke
+      letter by letter. Below 1000px the sidebar becomes an icon rail and the header
+      keeps its words on one line.
+   =========================================================================== */
+
+/* ---- 1. shell fills the window at any zoom ---- */
+html body:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-shell {
+  position: fixed !important; inset: 0 !important;
+  width: auto !important; height: auto !important;
+  min-height: 0 !important; max-height: none !important;
+}
+
+/* ---- 2. collapsed sidebar on the dashboard takes no space ---- */
+html body.dashboard-preview-active.sidebar-collapsed:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-shell #app-sidebar {
+  width: 0 !important; min-width: 0 !important; max-width: 0 !important; flex: 0 0 0 !important;
+  margin: 0 !important; padding: 0 !important; border: 0 !important;
+  overflow: hidden !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+}
+
+/* ---- 3. narrow windows ---- */
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .dashboard-preview-header button,
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .dashboard-preview-nav button,
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .dashboard-preview-nav a {
+  white-space: nowrap !important; word-break: keep-all !important; overflow-wrap: normal !important;
+}
+@media (max-width: 1000px) {
+  /* sidebar -> icon rail (unless collapsed, which hides it completely) */
+  html body.dashboard-preview-active:not(.sidebar-collapsed):not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-shell > .flex-1.flex > #app-sidebar {
+    width: 84px !important; min-width: 84px !important; max-width: 84px !important; flex: 0 0 84px !important;
+  }
+  html body.dashboard-preview-active:not(.sidebar-collapsed):not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-sidebar .tab-btn > span,
+  html body.dashboard-preview-active:not(.sidebar-collapsed):not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-sidebar .sidebar-system-brand strong,
+  html body.dashboard-preview-active:not(.sidebar-collapsed):not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-sidebar .sidebar-collapse-toggle span {
+    display: none !important;
+  }
+  html body.dashboard-preview-active:not(.sidebar-collapsed):not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-sidebar .tab-btn {
+    justify-content: center !important; padding-inline: 0 !important;
+  }
+  /* header: keep it on one row, drop the text links (all screens stay reachable from the sidebar / control centre) */
+  html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .dashboard-preview-nav { display: none !important; }
+  html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .dashboard-preview-header {
+    flex-wrap: nowrap !important; gap: 10px !important; padding: 10px 14px !important; height: auto !important; min-height: 60px;
+  }
+}
+
+/* ---- 4. compact owner card ---- */
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .hero-owner-card {
+  padding: 12px 20px !important; min-height: 0 !important; height: auto !important; border-radius: 18px !important;
+}
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .owner-details-center {
+  flex-direction: row !important; justify-content: center !important; flex-wrap: wrap; gap: 4px 16px !important;
+}
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .owner-avatar-frame-large {
+  width: 52px !important; height: 52px !important; border-radius: 16px !important; border-width: 2px !important;
+}
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .owner-avatar-frame-large i { font-size: 24px !important; }
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .owner-name { font-size: 20px !important; margin: 0 !important; }
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .owner-role { font-size: 12px !important; }
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard .hero-owner-card::before { width: 180px !important; height: 180px !important; }
+
+/* ---- 5. no white glow/shadow on dashboard text ---- */
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #tab-dashboard *,
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-sidebar *,
+html body.dashboard-preview-active:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) header * { text-shadow: none !important; }
+
+/* ---- 6. mouse-wheel scrolling on inner pages ---- */
+html body:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-shell > .flex-1.flex.max-w-7xl {
+  overflow-y: auto !important; overflow-x: hidden !important; min-height: 0 !important; overscroll-behavior: contain;
+}
+html body:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-shell { display: flex !important; flex-direction: column !important; }
+html body:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) #app-shell > .flex-1 { flex: 1 1 0 !important; min-height: 0 !important; }

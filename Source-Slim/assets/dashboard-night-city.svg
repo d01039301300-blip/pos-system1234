@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#071524"/><stop offset=".55" stop-color="#132c45"/><stop offset="1" stop-color="#06101c"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#7cc8eb" stop-opacity=".48"/><stop offset="1" stop-color="#5bb7e8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="water" x2="0" y2="1"><stop stop-color="#143c58"/><stop offset="1" stop-color="#071522"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <circle cx="1510" cy="250" r="310" fill="url(#glow)" filter="url(#soft)"/>
+  <circle cx="1510" cy="250" r="72" fill="#c6e5f3" opacity=".82"/>
+  <circle cx="1540" cy="229" r="68" fill="#102338" opacity=".72"/>
+  <g fill="#c8e7f4" opacity=".65">
+    <circle cx="206" cy="116" r="2"/><circle cx="414" cy="209" r="2"/><circle cx="752" cy="128" r="2"/><circle cx="1028" cy="73" r="2"/><circle cx="1280" cy="154" r="2"/><circle cx="1743" cy="119" r="2"/><circle cx="1820" cy="308" r="2"/>
+  </g>
+  <path d="M0 700 92 700 92 550 176 550 176 668 265 668 265 468 350 468 350 642 436 642 436 514 524 514 524 678 624 678 624 410 711 410 711 648 800 648 800 525 886 525 886 675 966 675 966 468 1047 468 1047 637 1132 637 1132 388 1222 388 1222 646 1312 646 1312 505 1401 505 1401 677 1492 677 1492 448 1585 448 1585 642 1676 642 1676 521 1770 521 1770 670 1844 670 1844 574 1920 574 1920 820 0 820Z" fill="#0a1825" opacity=".92"/>
+  <g fill="#5bb8dc" opacity=".3">
+    <path d="M118 581h12v24h-12zm25 0h12v24h-12zm-25 42h12v24h-12zm25 0h12v24h-12zM290 498h12v25h-12zm24 0h12v25h-12zm-24 43h12v25h-12zm24 0h12v25h-12zM649 445h12v26h-12zm25 0h12v26h-12zm-25 44h12v26h-12zm25 0h12v26h-12zm-25 44h12v26h-12zm25 0h12v26h-12zM1158 423h12v27h-12zm26 0h12v27h-12zm-26 46h12v27h-12zm26 0h12v27h-12zm-26 46h12v27h-12zm26 0h12v27h-12zM1525 485h12v26h-12zm25 0h12v26h-12zm-25 45h12v26h-12zm25 0h12v26h-12z"/>
+  </g>
+  <path d="M0 783 Q240 748 460 783T920 779T1380 782T1920 773V1080H0Z" fill="url(#water)" opacity=".88"/>
+  <g fill="none" stroke="#64c9e4" opacity=".18">
+    <path d="M0 850Q400 825 800 850t800 0 320 0M0 911q420-23 840 0t840 0 240 0M0 982q420-22 840 0t840 0 240 0"/>
+    <circle cx="260" cy="490" r="142"/><circle cx="260" cy="490" r="113"/><path d="M74 490h372M260 304v372"/>
+    <circle cx="1700" cy="510" r="150"/><circle cx="1700" cy="510" r="116"/><path d="M1510 510h380M1700 320v380"/>
+  </g>
+</svg>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>فاتورة إلكترونية</title>
+  <style>
+    body{font-family:Segoe UI,Tahoma,sans-serif;background:#f1f5f9;color:#0f172a;margin:0;padding:18px}
+    .card{max-width:680px;margin:20px auto;background:white;border-radius:18px;padding:22px;box-shadow:0 8px 26px #0f172a18}
+    .head{text-align:center;border-bottom:1px dashed #94a3b8;padding-bottom:12px}
+    h1{font-size:21px;margin:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0}
+    th,td{text-align:right;padding:9px 5px;border-bottom:1px solid #e2e8f0}
+    .totals{border-top:2px dashed #94a3b8;padding-top:12px}
+    .line{display:flex;justify-content:space-between;padding:5px 0}
+    .grand{font-size:20px;font-weight:900}
+    .barcode{text-align:center;background:#fff;padding:12px 0;overflow:hidden}
+    .barcode svg{display:block;max-width:100%;height:auto;margin:auto}
+    #barcode-fallback{font:700 18px ui-monospace,monospace;direction:ltr}
+    .button{display:block;margin:18px auto;padding:11px 24px;border:0;border-radius:10px;background:#be123c;color:white;font-weight:800;font-size:16px}
+    @media print{body{background:white;padding:0}.card{box-shadow:none;margin:0 auto;border-radius:0}.button{display:none}}
+    :root{--e1-scale:1.3}body{font-family:'Reem Kufi Ink',sans-serif;line-height:1.5}body[data-font-size="normal"]{--e1-scale:1}body[data-font-size="xlarge"]{--e1-scale:1.6}body :where(h1,h2,h3,button,input,select,textarea,table,th,td,p,span,a){font-family:'Reem Kufi Ink',sans-serif;font-size:max(13px,calc(14px * var(--e1-scale)));line-height:1.5}#barcode-fallback{font-family:'Reem Kufi Ink',sans-serif;font-variant-numeric:tabular-nums}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <header class="head"><h1 id="business">فاتورة إلكترونية</h1><div id="contact"></div></header>
+    <p>رقم الفاتورة: <b id="number">—</b></p>
+    <p>التاريخ: <span id="date">—</span></p>
+    <div class="barcode"><svg id="share-invoice-barcode" role="img" aria-label="باركود رقم الفاتورة"></svg><span id="barcode-fallback" hidden></span></div>
+    <table><thead><tr><th>الصنف</th><th>الكمية</th><th>سعر الوحدة</th><th>الإجمالي</th></tr></thead><tbody id="items"></tbody></table>
+    <section class="totals">
+      <div class="line"><span>المجموع الفرعي</span><b id="subtotal"></b></div>
+      <div class="line"><span>الخصم</span><b id="discount"></b></div>
+      <div class="line"><span>الضريبة</span><b id="tax"></b></div>
+      <div class="line grand"><span>الإجمالي</span><b id="total"></b></div>
+      <div class="line"><span>المدفوع</span><b id="paid"></b></div>
+      <div class="line"><span>طريقة الدفع</span><b id="payment"></b></div>
+    </section>
+    <button class="button" onclick="window.print()">حفظ PDF أو طباعة</button>
+  </main>
+  <script src="/assets/vendor/jsbarcode-3.12.3.all.min.js"></script>
+  <script>
+    (async () => {
+      const token = location.pathname.split('/').filter(Boolean).pop();
+      const response = await fetch(`/share/invoice/${encodeURIComponent(token)}/data`, { cache: 'no-store' });
+      if (!response.ok) throw new Error('تعذر فتح الفاتورة.');
+      const data = await response.json();
+      const set = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value ?? ''; };
+      set('business', data.business?.business_name || data.business?.activity_name || 'فاتورة إلكترونية');
+      set('contact', data.business?.phone || '');
+      set('number', data.invoice_number);
+      set('date', data.created_at);
+      const rows = (Array.isArray(data.items) ? data.items : []).map(item => {
+        const row = document.createElement('tr');
+        for (const value of [item.name, item.quantity, Number(item.unit_price).toFixed(2), Number(item.total).toFixed(2)]) {
+          const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell);
+        }
+        return row;
+      });
+      document.getElementById('items').replaceChildren(...rows);
+      for (const [id, value] of [['subtotal', data.subtotal], ['discount', data.discount], ['tax', data.tax_amount], ['total', data.total], ['paid', data.paid_amount]]) set(id, `${Number(value || 0).toFixed(2)} ج.م`);
+      set('payment', data.payment_method);
+      const barcode = document.getElementById('share-invoice-barcode');
+      const fallback = document.getElementById('barcode-fallback');
+      try {
+        if (typeof window.JsBarcode !== 'function') throw new Error('JsBarcode is unavailable');
+        window.JsBarcode(barcode, String(data.invoice_number), { format: 'CODE128', width: 2, height: 70, displayValue: true, fontSize: 16, margin: 22, background: '#ffffff', lineColor: '#000000' });
+      } catch (_) {
+        barcode.hidden = true;
+        fallback.hidden = false;
+        fallback.textContent = String(data.invoice_number || '');
+      }
+    })().catch(error => { document.querySelector('main').textContent = error.message; });
+  </script>
+</body>
+</html>

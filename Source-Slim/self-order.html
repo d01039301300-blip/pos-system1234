@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#dfe8dc">
+  <title>الطلب الذاتي</title>
+  <link rel="stylesheet" href="assets/vendor/fonts.css?v=5.3.0">
+  <link rel="stylesheet" href="app.css?v=20261027-e5w">
+  <link rel="stylesheet" href="assets/themes/system-themes.css?v=1">
+  <link rel="stylesheet" href="self-order.css?v=20261027-e5w">
+</head>
+<body class="theme-sage-metal" data-font-size="large">
+  <main class="self-order-shell">
+    <header class="self-order-header">
+      <div><p class="eyebrow">طلب مباشر من المتجر</p><h1 id="business-name">الطلب الذاتي</h1><p id="business-caption">اختر منتجاتك وسيراجع المتجر الطلب قبل التأكيد.</p></div>
+      <div class="appearance-controls" aria-label="إعدادات العرض">
+        <label>الثيم<select id="theme-choice" aria-label="الثيم"><option value="theme-sage-metal">افتراضي</option><option value="theme-navy-steel">داكن</option><option value="theme-ivory-gold">فاتح</option></select></label>
+        <label>حجم الخط<select id="font-choice" aria-label="حجم الخط"><option value="normal">عادي</option><option value="large" selected>كبير</option><option value="xlarge">كبير جداً</option></select></label>
+      </div>
+    </header>
+    <section class="catalog-layout" aria-label="كتالوج الطلب الذاتي">
+      <div class="catalog-main">
+        <div class="catalog-toolbar"><label class="search-label">بحث عن صنف<input id="product-search" type="search" autocomplete="off" placeholder="اسم الصنف أو الفئة"></label><div id="category-list" class="category-list" aria-label="تصفية حسب الفئة"></div></div>
+        <p id="catalog-status" class="status-line" role="status" aria-live="polite">جارٍ تحميل المنتجات…</p>
+        <div id="product-grid" class="product-grid" aria-label="المنتجات المتاحة"></div>
+      </div>
+      <aside class="order-cart" aria-label="سلة الطلب">
+        <div class="cart-heading"><h2>سلتك</h2><span id="cart-count" class="cart-count">0</span></div>
+        <div id="cart-items" class="cart-items"><p class="empty-cart">أضف منتجاتك لتظهر هنا.</p></div>
+        <div class="cart-total"><span>الإجمالي التقديري</span><strong id="cart-total">0.00 ج.م</strong></div>
+        <form id="order-form" class="order-form">
+          <label>الاسم<input id="customer-name" maxlength="100" autocomplete="name" required></label>
+          <label>رقم الهاتف<input id="customer-phone" maxlength="24" inputmode="tel" autocomplete="tel" required></label>
+          <label>طريقة الاستلام<select id="fulfillment"><option value="pickup">استلام من المتجر</option><option value="delivery">توصيل</option></select></label>
+          <label id="address-field" class="hidden">العنوان<input id="customer-address" maxlength="250" autocomplete="street-address"></label>
+          <label>ملاحظة للمتجر<textarea id="order-note" maxlength="500" rows="2"></textarea></label>
+          <button id="submit-order" class="primary-button" type="submit">إرسال الطلب للمراجعة</button>
+          <p class="checkout-note">لا يتم الدفع الآن. سيتأكد المتجر من توفر المنتجات قبل تجهيز الطلب.</p>
+        </form>
+      </aside>
+    </section>
+    <div id="order-result" class="result-banner hidden" role="status" aria-live="polite"></div>
+    <footer class="self-order-footer">الأسعار والتوفر يعاد التحقق منهما عند مراجعة المتجر.</footer>
+  </main>
+  <script src="self-order.js?v=20261027-e5w" defer></script>
+</body>
+</html>

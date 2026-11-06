@@ -1,0 +1,13 @@
+allowBuilds:
+  '@serialport/bindings-cpp': true
+  '@whiskeysockets/baileys': true
+  electron: true
+  electron-winstaller: true
+  node-hid: true
+  protobufjs: true
+  tesseract.js: false
+overrides:
+  libsignal: git+https://github.com/WhiskeySockets/libsignal-node.git#bcea72df9ec34d9d9140ab30619cf479c7c144c7
+patchedDependencies:
+  app-builder-lib@26.15.3: patches/app-builder-lib@26.15.3.patch
+blockExoticSubdeps: false

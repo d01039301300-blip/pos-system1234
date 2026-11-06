@@ -1,0 +1,109 @@
+{
+  "name": "general-business-pos",
+  "version": "4.16.0",
+  "description": "نشاط تجاري - SYSTEM Business POS",
+  "main": "electron/main.js",
+  "author": "نظام نقاط البيع",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "start": "set NODE_ENV=development&&electron .",
+    "dist:win": "set NODE_ENV=production&&set BUILD_MODE=client&&node tools/build-client-installer.cjs",
+    "build:win": "npm run dist:win"
+  },
+  "devDependencies": {
+    "electron": "38.8.6",
+    "electron-builder": "^26.0.12",
+    "javascript-obfuscator": "^4.1.1",
+    "playwright": "1.55.0",
+    "png-to-ico": "^3.0.2"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.24",
+    "express": "^4.19.2",
+    "html5-qrcode": "2.3.8",
+    "mime": "1.6.0",
+    "pg": "^8.11.3",
+    "qrcode": "1.5.4",
+    "tesseract.js": "5.1.1"
+  },
+  "optionalDependencies": {
+    "node-hid": "^3.0.0",
+    "node-thermal-printer": "^4.5.0",
+    "serialport": "^12.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron"
+    ]
+  },
+  "build": {
+    "appId": "com.generalbusiness.pos",
+    "productName": "SYSTEM — برنامج مبيعات متكامل",
+    "executableName": "System POS",
+    "npmRebuild": false,
+    "directories": {
+      "buildResources": "build"
+    },
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "shared/**/*",
+      "tools/**/*",
+      "!tools/seed-super-owner.js",
+      "!tools/toggle-super-owner.js",
+      "db/**/*",
+      "migrations/**/*",
+      "license-gate.html",
+      "license-gate-renderer.js",
+      "license-gate-preload.js",
+      "license-public.pem",
+      "*.js",
+      "*.json",
+      "*.sqlite",
+      "build/icon.ico",
+      "assets/**/*",
+      "node_modules/send/node_modules/mime/**/*",
+      "assets/vendor/xlsx.full.min.js",
+      "assets/vendor/licenses/sheetjs-0.20.3.txt",
+      "*.html",
+      "*.css",
+      "!backups/**/*",
+      "!mock-output/**/*",
+      "!.git/**/*",
+      "!**/*.map",
+      "!dummy_test_userData/**/*",
+      "!dist-layout*/**/*",
+      "!tests/**/*"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "SystemPOS-Setup-${version}.${ext}",
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": false,
+      "shortcutName": "System POS",
+      "installerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "include": "tools/installer-shortcuts.nsh"
+    },
+    "portable": {
+      "artifactName": "SystemPOS-Portable-${version}.${ext}"
+    },
+    "extraResources": [
+      {
+        "from": "assets/system-app-icon.ico",
+        "to": "system-app-icon.ico"
+      }
+    ]
+  }
+}

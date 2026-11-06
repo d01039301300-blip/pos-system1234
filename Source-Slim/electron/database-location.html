@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline';">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>اختيار مكان حفظ البيانات</title>
+  <style>
+    :root{color-scheme:dark;font-family:Cairo,"Segoe UI",Tahoma,sans-serif;background:#090a0f;color:#f4f7fb}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 15% 10%,rgba(0,229,255,.16),transparent 38%),radial-gradient(circle at 85% 90%,rgba(0,229,255,.1),transparent 42%),#090a0f}
+    .shell{width:660px;max-width:calc(100vw - 48px);padding:38px;border:1px solid rgba(0,229,255,.2);border-radius:24px;background:linear-gradient(145deg,rgba(18,22,35,.92),rgba(9,10,15,.88));box-shadow:0 24px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(18px)}
+    .badge{width:52px;height:52px;border:1px solid rgba(0,229,255,.35);border-radius:16px;display:grid;place-items:center;color:#00e5ff;font-size:25px;box-shadow:0 0 28px rgba(0,229,255,.12);margin-bottom:22px}
+    h1{font-size:27px;margin:0 0 10px;font-weight:700;letter-spacing:.1px}
+    p{margin:0 0 28px;color:#9aa9bb;font-size:15px;line-height:1.8}
+    label{display:block;margin-bottom:9px;color:#d8e2ee;font-size:14px}
+    .row{display:flex;gap:10px;align-items:center}
+    input{flex:1;min-width:0;height:48px;border:1px solid rgba(0,229,255,.2);border-radius:12px;padding:0 14px;background:#121623;color:#f4f7fb;font:inherit;direction:ltr;outline:none}
+    input:focus{border-color:#00e5ff;box-shadow:0 0 0 3px rgba(0,229,255,.12)}
+    button{height:48px;border-radius:12px;border:1px solid rgba(0,229,255,.32);padding:0 20px;font:inherit;font-weight:700;cursor:pointer;transition:filter .18s ease,transform .18s ease}
+    button:hover{filter:brightness(1.12);transform:translateY(-1px)}
+    #browse{background:#121623;color:#00e5ff;white-space:nowrap}
+    #confirm{width:100%;margin-top:25px;background:#00e5ff;color:#071017;border-color:#00e5ff}
+    #cancel{width:100%;margin-top:10px;background:transparent;color:#9aa9bb;border-color:rgba(255,255,255,.1)}
+    #status{min-height:24px;margin-top:15px;color:#ffb4b4;font-size:13px}
+    .note{margin-top:18px;color:#6f8094;font-size:12px}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="badge">▣</div>
+    <h1>اختر مجلد حفظ بياناتك</h1>
+    <p>سيتم حفظ قاعدة البيانات داخل المجلد الذي تختاره. إذا وُجدت قاعدة بيانات سابقة فسيتم فتحها كما هي، وإذا كان المجلد فارغاً فسيتم إنشاء قاعدة جديدة دون الكتابة فوق أي ملف موجود.</p>
+    <label for="directory">مجلد البيانات</label>
+    <div class="row"><input id="directory" readonly><button id="browse" type="button">استعراض</button></div>
+    <div id="status" role="status" aria-live="polite"></div>
+    <button id="confirm" type="button">تأكيد وحفظ المكان</button>
+    <button id="cancel" type="button">إلغاء</button>
+    <div class="note">سيبقى الترخيص وملفات التجربة محفوظين داخل AppData.</div>
+  </main>
+  <script>
+    const query = new URLSearchParams(location.search);
+    const directory = document.querySelector('#directory');
+    const status = document.querySelector('#status');
+    directory.value = query.get('defaultDirectory') || '';
+    document.querySelector('#browse').addEventListener('click', async () => {
+      status.textContent = '';
+      const result = await window.databaseLocation.browse();
+      if (!result.canceled) directory.value = result.directoryPath || '';
+    });
+    document.querySelector('#confirm').addEventListener('click', async () => {
+      if (!directory.value) { status.textContent = 'اختر مجلداً أولاً.'; return; }
+      status.textContent = 'جارٍ حفظ المكان...';
+      const result = await window.databaseLocation.confirm(directory.value);
+      if (!result.ok) { status.textContent = result.error || 'تعذر حفظ المكان.'; return; }
+      status.textContent = 'تم حفظ المكان. جارٍ تشغيل النظام...';
+    });
+    document.querySelector('#cancel').addEventListener('click', () => window.databaseLocation.cancel());
+  </script>
+</body>
+</html>
