@@ -8250,3 +8250,12 @@ html body.erp-preview-active #app-shell #theme-mode-toggle { order:5; flex:0 0 a
 #tab-dashboard .dashboard-shortcuts-menu > div { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:7px 3px; border-bottom:1px solid var(--border-color); color:var(--text-color); font-size:12px; }
 #tab-dashboard .dashboard-shortcuts-menu kbd { flex:none; padding:3px 7px; border:1px solid var(--border-color); border-radius:6px; background:var(--surface-muted,var(--app-surface-2)); color:var(--text-color); font:700 11px ui-monospace,monospace; }
 #tab-dashboard .dashboard-shortcuts-menu > small { display:block; margin-top:10px; color:var(--muted-text,var(--app-muted)); font-size:11px; }
+/* --- إصلاحات الواجهة --- */
+.sales-screen { background-color: #1e1e2f !important; color: #fff !important; }
+.active-interface { box-shadow: none !important; border: 2px solid #007bff !important; }
+.purchase-invoice-table { width: 100% !important; table-layout: auto !important; }
+.purchase-invoice-table th, .purchase-invoice-table td { padding: 10px !important; white-space: nowrap !important; }
+.custom-sort-btn, .reset-sort-btn, #custom-sort-box { display: none !important; }
+.password-wrapper { position: relative; display: flex; align-items: center; }
+.password-wrapper input { padding-right: 40px; width: 100%; }
+.toggle-password-eye { position: absolute; right: 10px; cursor: pointer; color: #666; font-size: 18px; }
