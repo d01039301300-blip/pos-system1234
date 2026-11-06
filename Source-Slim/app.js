@@ -11940,5 +11940,13 @@ window.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && (e.key === 'r' || e.key === 'ر')) {
         e.preventDefault(); location.reload();
     }
-});
+});// --- تحميل ملفات الإصلاح (Master Fixes) أوتوماتيك ---
+const masterCss = document.createElement('link');
+masterCss.rel = 'stylesheet';
+masterCss.href = 'master-fixes.css';
+document.head.appendChild(masterCss);
+
+const masterJs = document.createElement('script');
+masterJs.src = 'master-fixes.js';
+document.body.appendChild(masterJs);
 })();
